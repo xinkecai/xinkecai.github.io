@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web Compass</title>
+    <meta name="description" content="A sample homepage to search the web and discover useful internet resources." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Source+Serif+4:wght@400;600&display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --bg-top: #f7f1e6;
+            --bg-bottom: #d7ece6;
+            --ink: #1d2a2f;
+            --muted: #4f6168;
+            --primary: #0e6b69;
+            --primary-strong: #0a4d4a;
+            --card: rgba(255, 255, 255, 0.68);
+            --border: rgba(16, 56, 53, 0.2);
+            --shadow: 0 12px 30px rgba(17, 57, 61, 0.14);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            color: var(--ink);
+            font-family: "Source Serif 4", Georgia, serif;
+            background: linear-gradient(170deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+            overflow-x: hidden;
+        }
+
+        body::before,
+        body::after {
+            content: "";
+            position: fixed;
+            z-index: -1;
+            border-radius: 999px;
+            filter: blur(6px);
+        }
+
+        body::before {
+            width: 340px;
+            height: 340px;
+            background: rgba(255, 130, 54, 0.2);
+            top: -120px;
+            left: -90px;
+        }
+
+        body::after {
+            width: 360px;
+            height: 360px;
+            background: rgba(24, 139, 124, 0.22);
+            bottom: -160px;
+            right: -120px;
+        }
+
+        .page {
+            width: min(1080px, 92vw);
+            margin: 0 auto;
+            padding: 2.2rem 0 3rem;
+        }
+
+        .hero {
+            background: linear-gradient(120deg, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.55));
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            animation: rise-in 600ms ease-out both;
+        }
+
+        .hero h1 {
+            font-family: "Space Grotesk", "Trebuchet MS", sans-serif;
+            font-size: clamp(1.9rem, 1.2rem + 2.5vw, 3rem);
+            line-height: 1.1;
+            margin: 0;
+        }
+
+        .hero p {
+            margin: 0.85rem 0 0;
+            color: var(--muted);
+            max-width: 62ch;
+        }
+
+        .search-panel {
+            margin-top: 1.5rem;
+            display: grid;
+            gap: 0.65rem;
+        }
+
+        .search-form {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 0.6rem;
+        }
+
+        .search-form input {
+            border: 1px solid rgba(15, 76, 76, 0.2);
+            border-radius: 14px;
+            padding: 0.9rem 1rem;
+            font: inherit;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.92);
+        }
+
+        .search-form button {
+            border: 0;
+            border-radius: 14px;
+            padding: 0.9rem 1.2rem;
+            font-family: "Space Grotesk", "Trebuchet MS", sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #fff;
+            background: linear-gradient(120deg, var(--primary), #1a8481);
+            cursor: pointer;
+            transition: transform 120ms ease, filter 120ms ease;
+        }
+
+        .search-form button:hover {
+            transform: translateY(-1px);
+            filter: brightness(1.04);
+        }
+
+        .hint {
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        .section-title {
+            margin: 1.8rem 0 0.9rem;
+            font-family: "Space Grotesk", "Trebuchet MS", sans-serif;
+            letter-spacing: 0.01em;
+            font-size: 1.25rem;
+        }
+
+        .grid {
+            display: grid;
+            gap: 0.9rem;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1rem;
+            box-shadow: var(--shadow);
+            opacity: 0;
+            transform: translateY(8px);
+            animation: card-in 460ms ease-out forwards;
+        }
+
+        .card:nth-child(2) {
+            animation-delay: 70ms;
+        }
+
+        .card:nth-child(3) {
+            animation-delay: 120ms;
+        }
+
+        .card:nth-child(4) {
+            animation-delay: 170ms;
+        }
+
+        .card h3 {
+            margin: 0;
+            font-family: "Space Grotesk", "Trebuchet MS", sans-serif;
+            font-size: 1.1rem;
+        }
+
+        .card p {
+            margin: 0.55rem 0 0.75rem;
+            color: var(--muted);
+        }
+
+        .card a {
+            font-family: "Space Grotesk", "Trebuchet MS", sans-serif;
+            color: var(--primary-strong);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .card a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        @keyframes rise-in {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes card-in {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 680px) {
+            .hero {
+                padding: 1.35rem;
+                border-radius: 18px;
+            }
+
+            .search-form {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="page">
+        <section class="hero">
+            <h1>Web Compass</h1>
+            <p>
+                Start with a search, then jump into curated websites for news, learning,
+                productivity, and inspiration.
+            </p>
+
+            <div class="search-panel">
+                <form class="search-form" id="searchForm" action="https://www.google.com/search" method="get"
+                    target="_blank">
+                    <input id="query" name="q" type="text" placeholder="Search the web..." required />
+                    <button type="submit">Search Google</button>
+                </form>
+                <div class="hint">
+                    Tip: You can replace Google with Bing, DuckDuckGo, or any search engine by changing the form action
+                    URL.
+                </div>
+            </div>
+        </section>
+
+        <h2 class="section-title">Quick Destinations</h2>
+        <section class="grid" aria-label="Useful website links">
+            <article class="card">
+                <h3>Wikipedia</h3>
+                <p>Reference articles and background reading on almost any topic.</p>
+                <a href="https://www.wikipedia.org/" target="_blank" rel="noopener noreferrer">Open wikipedia.org</a>
+            </article>
+
+            <article class="card">
+                <h3>YouTube</h3>
+                <p>Find tutorials, lectures, and entertainment videos.</p>
+                <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">Open youtube.com</a>
+            </article>
+
+            <article class="card">
+                <h3>GitHub</h3>
+                <p>Explore open-source projects, code samples, and docs.</p>
+                <a href="https://github.com/" target="_blank" rel="noopener noreferrer">Open github.com</a>
+            </article>
+
+            <article class="card">
+                <h3>BBC News</h3>
+                <p>Read global headlines and watch live reporting.</p>
+                <a href="https://www.bbc.com/news" target="_blank" rel="noopener noreferrer">Open bbc.com/news</a>
+            </article>
+        </section>
+
+        <h2 class="section-title">Featured Reading</h2>
+        <section class="grid" aria-label="Featured content examples">
+            <article class="card">
+                <h3>What Is the Web?</h3>
+                <p>
+                    The World Wide Web is a system of linked resources accessed through browsers and internet protocols.
+                </p>
+                <a href="https://developer.mozilla.org/en-US/docs/Learn/Common_questions/Pages_sites_servers_and_search_engines"
+                    target="_blank" rel="noopener noreferrer">Read on MDN</a>
+            </article>
+
+            <article class="card">
+                <h3>Online Safety Basics</h3>
+                <p>
+                    Learn how to protect your data with strong passwords, safe downloads, and phishing awareness.
+                </p>
+                <a href="https://staysafeonline.org/stay-safe-online/" target="_blank" rel="noopener noreferrer">Read
+                    safety tips</a>
+            </article>
+
+            <article class="card">
+                <h3>Free Learning Platforms</h3>
+                <p>
+                    Discover open courses and tutorials in programming, design, business, and more.
+                </p>
+                <a href="https://www.coursera.org/" target="_blank" rel="noopener noreferrer">Explore Coursera</a>
+            </article>
+        </section>
+
+        <footer>
+            Sample homepage for browsing and discovering internet content.
+        </footer>
+    </main>
+
+    <script>
+        // Focus on the search input on load for faster keyboard navigation.
+        window.addEventListener("DOMContentLoaded", () => {
+            const query = document.getElementById("query");
+            if (query) query.focus();
+        });
+    </script>
+</body>
+
+</html>
