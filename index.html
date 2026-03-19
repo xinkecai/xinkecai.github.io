@@ -68,6 +68,35 @@
             padding: 2.2rem 0 3rem;
         }
 
+        .top-nav {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.6rem;
+            margin-bottom: 0.9rem;
+        }
+
+        .tab-link {
+            display: inline-block;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 0.45rem 0.9rem;
+            background: rgba(255, 255, 255, 0.72);
+            color: var(--primary-strong);
+            text-decoration: none;
+            font-family: "Space Grotesk", "Trebuchet MS", sans-serif;
+            font-weight: 700;
+            box-shadow: var(--shadow);
+        }
+
+        .tab-link.active {
+            color: #fff;
+            background: linear-gradient(120deg, var(--primary), #1a8481);
+        }
+
+        .tab-link:hover {
+            filter: brightness(1.04);
+        }
+
         .hero {
             background: linear-gradient(120deg, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.55));
             border: 1px solid var(--border);
@@ -233,6 +262,11 @@
 
 <body>
     <main class="page">
+        <nav class="top-nav" aria-label="Main site tabs">
+            <a class="tab-link active" href="index.html">Home</a>
+            <a class="tab-link" href="blog/index.html">Blog</a>
+        </nav>
+
         <section class="hero">
             <h1>Web Compass</h1>
             <p>
@@ -306,6 +340,21 @@
                     Discover open courses and tutorials in programming, design, business, and more.
                 </p>
                 <a href="https://www.coursera.org/" target="_blank" rel="noopener noreferrer">Explore Coursera</a>
+            </article>
+        </section>
+
+        <h2 class="section-title">From the Blog</h2>
+        <section class="grid" aria-label="Recent blog posts">
+            <article class="card">
+                <h3>Why I Started This Website</h3>
+                <p>A quick intro to the goals of this site and what I plan to share.</p>
+                <a href="blog/why-i-started-this-website.html">Read blog post</a>
+            </article>
+
+            <article class="card">
+                <h3>My Productive Browser Setup</h3>
+                <p>Simple browser tricks and extensions that make online research faster.</p>
+                <a href="blog/my-productive-browser-setup.html">Read blog post</a>
             </article>
         </section>
 

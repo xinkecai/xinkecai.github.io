@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog | Web Compass</title>
+    <meta name="description" content="Write and browse blog posts for Web Compass." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Source+Serif+4:wght@400;600&display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --bg-top: #f7f1e6;
+            --bg-bottom: #d7ece6;
+            --ink: #1d2a2f;
+            --muted: #4f6168;
+            --primary: #0e6b69;
+            --primary-strong: #0a4d4a;
+            --card: rgba(255, 255, 255, 0.75);
+            --border: rgba(16, 56, 53, 0.2);
+            --shadow: 0 12px 30px rgba(17, 57, 61, 0.14);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            color: var(--ink);
+            font-family: "Source Serif 4", Georgia, serif;
+            background: linear-gradient(170deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+        }
+
+        .page {
+            width: min(980px, 92vw);
+            margin: 0 auto;
+            padding: 2.1rem 0 3rem;
+        }
+
+        .top-nav {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.6rem;
+            margin-bottom: 0.9rem;
+        }
+
+        .tab-link {
+            display: inline-block;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 0.45rem 0.9rem;
+            background: rgba(255, 255, 255, 0.72);
+            color: var(--primary-strong);
+            text-decoration: none;
+            font-family: "Space Grotesk", "Trebuchet MS", sans-serif;
+            font-weight: 700;
+            box-shadow: var(--shadow);
+        }
+
+        .tab-link.active {
+            color: #fff;
+            background: linear-gradient(120deg, var(--primary), #1a8481);
+        }
+
+        .panel {
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            box-shadow: var(--shadow);
+            background: var(--card);
+            padding: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        h1,
+        h2,
+        h3 {
+            margin-top: 0;
+            font-family: "Space Grotesk", "Trebuchet MS", sans-serif;
+        }
+
+        .muted {
+            color: var(--muted);
+        }
+
+        .editor {
+            display: grid;
+            gap: 0.65rem;
+        }
+
+        .editor input,
+        .editor textarea {
+            width: 100%;
+            border: 1px solid rgba(15, 76, 76, 0.2);
+            border-radius: 12px;
+            padding: 0.8rem;
+            font: inherit;
+            background: rgba(255, 255, 255, 0.92);
+        }
+
+        .editor textarea {
+            min-height: 160px;
+            resize: vertical;
+        }
+
+        .editor button {
+            justify-self: start;
+            border: 0;
+            border-radius: 12px;
+            padding: 0.7rem 1rem;
+            font-family: "Space Grotesk", "Trebuchet MS", sans-serif;
+            font-weight: 700;
+            color: #fff;
+            background: linear-gradient(120deg, var(--primary), #1a8481);
+            cursor: pointer;
+        }
+
+        .list {
+            display: grid;
+            gap: 0.8rem;
+        }
+
+        .item {
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 0.85rem;
+        }
+
+        .item p {
+            margin-bottom: 0;
+        }
+
+        .item a {
+            color: var(--primary-strong);
+            text-decoration: none;
+            font-weight: 700;
+            font-family: "Space Grotesk", "Trebuchet MS", sans-serif;
+        }
+
+        .item a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            margin-top: 1.2rem;
+            text-align: center;
+            color: var(--muted);
+        }
+    </style>
+</head>
+
+<body>
+    <main class="page">
+        <nav class="top-nav" aria-label="Main site tabs">
+            <a class="tab-link" href="../index.html">Home</a>
+            <a class="tab-link active" href="index.html">Blog</a>
+        </nav>
+
+        <section class="panel">
+            <h1>Blog</h1>
+            <p class="muted">Write your own blog entries and keep them in this browser using local storage.</p>
+        </section>
+
+        <section class="panel">
+            <h2>Write a Blog Post</h2>
+            <form class="editor" id="blogForm">
+                <input id="postTitle" type="text" placeholder="Post title" required />
+                <textarea id="postBody" placeholder="Write your thoughts here..." required></textarea>
+                <button type="submit">Publish to Local List</button>
+            </form>
+        </section>
+
+        <section class="panel">
+            <h2>Sample Blog Posts</h2>
+            <div class="list">
+                <article class="item">
+                    <h3>Why I Started This Website</h3>
+                    <a href="why-i-started-this-website.html">Open sample post</a>
+                </article>
+                <article class="item">
+                    <h3>My Productive Browser Setup</h3>
+                    <a href="my-productive-browser-setup.html">Open sample post</a>
+                </article>
+            </div>
+        </section>
+
+        <section class="panel">
+            <h2>Your Recent Local Posts</h2>
+            <div id="localPosts" class="list" aria-live="polite"></div>
+        </section>
+
+        <footer>Blog posts written here are saved in your browser only.</footer>
+    </main>
+
+    <script>
+        const STORAGE_KEY = "web_compass_blog_posts";
+
+        function loadPosts() {
+            try {
+                return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+            } catch {
+                return [];
+            }
+        }
+
+        function savePosts(posts) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
+        }
+
+        function renderPosts() {
+            const container = document.getElementById("localPosts");
+            const posts = loadPosts();
+
+            if (!posts.length) {
+                container.innerHTML = "<p class=\"muted\">No local posts yet. Write one above.</p>";
+                return;
+            }
+
+            container.innerHTML = posts
+                .map((post) => {
+                    const safeTitle = post.title.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                    const safeBody = post.body
+                        .replace(/</g, "&lt;")
+                        .replace(/>/g, "&gt;")
+                        .replace(/\n/g, "<br>");
+
+                    return `
+                        <article class="item">
+                            <h3>${safeTitle}</h3>
+                            <p>${safeBody}</p>
+                        </article>
+                    `;
+                })
+                .join("");
+        }
+
+        document.getElementById("blogForm").addEventListener("submit", (event) => {
+            event.preventDefault();
+            const titleInput = document.getElementById("postTitle");
+            const bodyInput = document.getElementById("postBody");
+
+            const title = titleInput.value.trim();
+            const body = bodyInput.value.trim();
+            if (!title || !body) {
+                return;
+            }
+
+            const posts = loadPosts();
+            posts.unshift({ title, body, createdAt: new Date().toISOString() });
+            savePosts(posts.slice(0, 8));
+
+            titleInput.value = "";
+            bodyInput.value = "";
+            renderPosts();
+        });
+
+        renderPosts();
+    </script>
+</body>
+
+</html>
